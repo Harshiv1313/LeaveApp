@@ -37,7 +37,29 @@ const login = async (req, res) => {
   res.send({ token , user: user , message : 'User Login successfully!' });
 };
 
+const userDetails = async (req, res) => {
+  
+  try {
+    const { userId } = req.query;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    const userData = await User.findById(userId).select('-password'); // exclude password
+
+    if (!userData) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(userData);
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   signup,
-  login
+  login , userDetails
 };

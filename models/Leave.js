@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const leaveSchema = new mongoose.Schema({
-  employee: String,
+  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Reference to User model
   type: String,
   startDate: Date,
   endDate: Date,
@@ -11,4 +11,7 @@ const leaveSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Leave', leaveSchema);
+
+const Leave = mongoose.model('Leave', leaveSchema);
+
+module.exports = Leave;

@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const { requestLeave  , getLeaves , handleLeave} = require('../controllers/leaveController');
 

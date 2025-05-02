@@ -2,10 +2,31 @@ const Leave = require('../models/Leave')
 const User = require('../models/User'); // Make sure path is correct
 
 
- const requestLeave = async (req, res) => {
-  const leave = new Leave(req.body);
-  await leave.save();
-  res.send({ message: 'Leave request submitted', leave });
+const requestLeave = async (req, res) => {
+  try {
+    const { employee, type, startDate, endDate, totalDays, details } = req.body;
+
+    // Basic validation (you could also use a library like Joi for this)
+    if (!employee || !type || !startDate || !endDate ) {
+      return res.status(400).json({ error: 'All required fields must be provided.' });
+    }
+
+    const leave = new Leave({
+      employee,
+      type,
+      startDate,
+      endDate,
+      totalDays,
+      details
+    });
+
+    await leave.save();
+
+    res.status(201).json({ message: 'Leave request submitted', leave });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while submitting the leave request.' });
+  }
 };
 
 

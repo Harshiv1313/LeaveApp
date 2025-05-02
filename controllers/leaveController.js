@@ -7,7 +7,7 @@ const requestLeave = async (req, res) => {
     const { employee, type, startDate, endDate, totalDays, details } = req.body;
 
     // Basic validation (you could also use a library like Joi for this)
-    if (!employee || !type || !startDate || !endDate ) {
+    if (!employee  ) {
       return res.status(400).json({ error: 'All required fields must be provided.' });
     }
 

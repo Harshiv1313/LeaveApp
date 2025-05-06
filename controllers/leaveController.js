@@ -90,7 +90,7 @@ const getLeaves = async (req, res) => {
       leaves = await Leave.find().populate('employee', 'name email');
     } else {
       // User can see only their leaves
-      leaves = await Leave.find({ employee: userId });
+      leaves = await Leave.find({ employee: userId }).populate('employee', 'name email');
     }
 
     res.send(leaves);
